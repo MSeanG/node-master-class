@@ -11,6 +11,7 @@ var StringDecoder   = require( 'string_decoder' ).StringDecoder;
 var config          = require( './config' );
 var fs              = require( 'fs' );
 
+
 // Instantiate the HTTP server
 var httpServer = http.createServer( function( req, res ) {
     unifiedServer( req, res );
@@ -38,6 +39,7 @@ httpsServer.listen( config.httpsPort, function() {
 
 // All the server logic for both the http and https server
 var unifiedServer = function( req, res ) {
+
     // Get URL and parse it
     var parsedUrl = url.parse( req.url, true );
 
@@ -57,9 +59,11 @@ var unifiedServer = function( req, res ) {
     // Get the payload if any
     var decoder = new StringDecoder( 'utf-8' );
     var buffer = '';
+
     req.on( 'data', function( data ){
         buffer += decoder.write( data );
     });
+
     req.on( 'end', function(){
         buffer += decoder.end();
 
